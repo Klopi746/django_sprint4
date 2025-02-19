@@ -61,6 +61,11 @@ class Post(BaseModel):
             'можно делать отложенные публикации.'
         ),
     )
+    image = models.ImageField(
+        'Фото к посту',
+        upload_to='posts_images',
+        blank=True
+    )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -83,6 +88,34 @@ class Post(BaseModel):
     def __str__(self):
         return f'{self.title} - {self.author.get_username()}'
 
+    def comment_count(self):
+        return self.comment_set.count()
+
     class Meta:
+        ordering = ('-pub_date', )
+
         verbose_name = 'публикация'
         verbose_name_plural = 'Публикации'
+
+
+class Comment(BaseModel):
+    text = models.TextField(verbose_name='Текст')
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE,
+        verbose_name='Публикация'
+    )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name='Автор комментария'
+    )
+
+    def __str__(self):
+        return f'{self.text[:16]} - {self.author.get_username()}'
+
+    class Meta:
+        ordering = ('created_at', )
+
+        verbose_name = 'комментарий'
+        verbose_name_plural = 'Комментарии'

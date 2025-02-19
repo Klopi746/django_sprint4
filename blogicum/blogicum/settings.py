@@ -26,7 +26,10 @@ SECRET_KEY = 'django-insecure-ze9hu+g()g0e)a^8j3-7(pip$je%4rj^xk9*)-()m)c192$+2p
 DEBUG = True
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+]
 
 
 # Application definition
@@ -40,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_bootstrap5',
     'debug_toolbar',
 ]
 
@@ -141,3 +145,12 @@ INTERNAL_IPS = [
     '127.0.0.1:127',
     'localhost',
 ]
+
+LOGIN_URL = '/auth/login/'
+
+LOGIN_REDIRECT_URL = 'blog:index'
+
+MEDIA_ROOT = BASE_DIR / 'media'
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
