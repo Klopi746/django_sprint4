@@ -176,6 +176,11 @@ class CommentDeleteView(DeleteView):
             },
         )
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.pop('form', None)
+        return context
+
 
 class PostListView(BasePostQueryMixin, ListView):
     model = Post
